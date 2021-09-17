@@ -1,6 +1,8 @@
 const express = require('express')
 const cors = require('cors')
 const person = require('../routes/person')
+const mutation = require('../routes/mutation')
+const {dbConnection} = require('../database/configuration')
 
 class Server {
 
@@ -8,9 +10,14 @@ class Server {
         this.app = express()
         this.port = process.env.PORT || 8080
         this.personRoute = '/api/persons'
+        this.mutationRoute = '/api/mutation'
         
+        this.ConnectToDb()
+
         this.middlewares()
+
         this.routes()
+        
     }
 
 
@@ -21,6 +28,11 @@ class Server {
 
     routes(){
         this.app.use(this.personRoute, person)
+        this.app.use(this.mutationRoute, mutation)
+    }
+
+    async ConnectToDb(){
+        await dbConnection()
     }
 
     listen(){
