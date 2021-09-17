@@ -3,7 +3,8 @@ const {Schema, model} = require('mongoose')
 const mutationSchema = Schema({
     dna: {
         type: [String],
-        require: [ true , "DNA must be provided"]
+        require: [ true , "DNA must be provided"],
+        unique: true
     },
     hasMutation: {
         type: Boolean,
@@ -17,4 +18,4 @@ const mutationSchema = Schema({
     }
 })
 
-module.exports = 'Mutation', mutationSchema
+module.exports = model('Mutation', mutationSchema)
