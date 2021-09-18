@@ -4,6 +4,7 @@ const mutationSchema = Schema({
     dna: {
         type: [String],
         require: [ true , "DNA must be provided"],
+        enum: ["A", "T", "C", "G"],
         unique: true
     },
     hasMutation: {
