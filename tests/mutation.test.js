@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
-const server = require('../index')
+const { server, listen } = require('../index')
 const Mutation = require('../models/mutation')
 
 const api = supertest(server.app)
@@ -32,4 +32,5 @@ test('mutation returned as json', async () => {
 
 afterAll(() => {
 	mongoose.connection.close()
+	listen.close()
 })

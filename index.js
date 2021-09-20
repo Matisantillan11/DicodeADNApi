@@ -4,6 +4,6 @@ require('dotenv').config()
 
 const server = new Server()
 
-server.listen()
+const listen = server.listen()
 
-module.exports = server
+module.exports = { server, listen }

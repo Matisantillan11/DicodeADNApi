@@ -32,4 +32,9 @@ const mutationSchema = Schema({
 	},
 })
 
+mutationSchema.methods.toJSON = function () {
+	const { __v, _id, ...mutation } = this.toObject()
+	return mutation
+}
+
 module.exports = model('Mutation', mutationSchema)
