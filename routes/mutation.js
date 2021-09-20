@@ -17,9 +17,8 @@ router.post(
 	[
 		check('dna', 'DNA must be provided to analize').notEmpty(),
 		check('dna', 'DNA must be an array').isArray(),
+		/* check('dna').custom((dna) => (dna)), */
 		check('dna').custom(validateUniqueDna),
-		/* check('dna').custom(validateBase), */
-
 		validateEntries,
 	],
 	postMutation,
