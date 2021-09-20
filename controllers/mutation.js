@@ -21,6 +21,7 @@ const postMutation = (req = request, res = response) => {
 		mutation,
 		quantityMutations: mutations,
 		quantityNoMutations: nomutations,
+		ratio: mutations / nomutations,
 	})
 }
 

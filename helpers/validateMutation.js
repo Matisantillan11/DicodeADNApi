@@ -8,18 +8,24 @@ const hasMutation = (dna) => {
 
 	const mutationsHorizontals = validateHorizontal(dna)
 	const mutationsVerticals = validateVertical(arrayJoined)
-
-	//const mutationsDiagonals = validateDiagonal(arrayTemp)
+	const mutationsDiagonals = validateDiagonal(arrayJoined)
 
 	mutations =
-		mutations + mutationsHorizontals.mutations + mutationsVerticals.mutations
+		mutations +
+		mutationsHorizontals.mutations +
+		mutationsVerticals.mutations +
+		mutationsDiagonals.mutations
 
 	nomutations =
 		nomutations +
 		mutationsHorizontals.nomutations +
-		mutationsVerticals.nomutations
+		mutationsVerticals.nomutations +
+		mutationsDiagonals.nomutations
+
+	mutations === 0 && !status
 
 	return {
+		status,
 		mutations,
 		nomutations,
 	}
@@ -101,24 +107,38 @@ const validateVertical = (array) => {
 }
 
 const validateDiagonal = (array) => {
-	let tempArray = []
-	let arrayDiagonal = []
+	let mutations = 0
+	let nomutations = 0
 
-	tempArray = convertToVertical(array)
+	const LowerDiagonal = LowerDiagonalTravel(array)
 
-	let index = 0
-	while (arrayDiagonal.length <= tempArray.length - 1) {
-		let cadena = ''
-		/* 		for (index; index < tempArray.length; index++) {
-			cadena = cadena + tempArray[index].charAt(cadena.length)
+	LowerDiagonal.map((el) => {
+		if (
+			el.match('CCCC') ||
+			el.match('AAAA') ||
+			el.match('TTTT') ||
+			el.match('GGGG')
+		) {
+			mutations++
+			LowerDiagonal.splice(LowerDiagonal.indexOf(el), 1)
 		}
 
-		recorrido diagonal ascendente
-		*/
+		nomutations++
+	})
 
+	return { mutations, nomutations }
+}
+
+const LowerDiagonalTravel = (array) => {
+	let tempArray = convertToVertical(array)
+	let arrayDiagonal = []
+	let index = 0
+
+	while (arrayDiagonal.length <= tempArray.length - 1) {
+		let cadena = ''
 		//recorrido diagonal descendente
 
-		for (index; index < tempArray.length; index++) {
+		for (index; index <= tempArray.length - 1; index++) {
 			cadena = cadena + tempArray[cadena.length].charAt(index)
 		}
 
@@ -126,7 +146,7 @@ const validateDiagonal = (array) => {
 		index = arrayDiagonal.length
 	}
 
-	console.log(arrayDiagonal)
+	return arrayDiagonal
 }
 
 module.exports = { hasMutation }
