@@ -3,7 +3,7 @@ const { hasMutation } = require('../helpers/validateMutation')
 
 const getMutation = async (req = request, res = response) => {
 	const mutations = await Mutation.find()
-	res.json({
+	res.status(200).json({
 		mutations,
 	})
 }
@@ -32,7 +32,7 @@ const postMutation = async (req = request, res = response) => {
 
 	await mutation.save()
 
-	return res.status(200).json({
+	return res.status(201).json({
 		mutation,
 	})
 }
