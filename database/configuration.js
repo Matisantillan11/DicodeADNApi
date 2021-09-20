@@ -1,21 +1,17 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose')
 
-const dbConnection = async () =>{
-    try {
-        
-        await mongoose.connect(process.env.MONGO_CNN, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        })
+const dbConnection = async () => {
+	const { MONGO_CNN, MONGO_CNN_TEST, NODE_ENV } = process.env
+	const connectionString = NODE_ENV === 'test' ? MONGO_CNN_TEST : MONGO_CNN
 
-        console.log("Connected successfully to the database")
-        
-        
-    } catch (error) {
-        console.error("An error was detected connecting to database: " + error)
-        throw new Error("Error connecting to the database")
-    
-    }
+	try {
+		await mongoose.connect(connectionString)
+
+		console.log(`Connected successfully to the database - ${NODE_ENV}`)
+	} catch (error) {
+		console.error('An error was detected connecting to database: ' + error)
+		throw new Error('Error connecting to the database')
+	}
 }
 
 module.exports = { dbConnection }

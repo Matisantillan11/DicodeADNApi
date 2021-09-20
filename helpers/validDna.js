@@ -1,10 +1,10 @@
 const Mutation = require('../models/mutation')
 
-const validateUniqueDna = async (dna) => {
-	const dnaFinded = await Mutation.findOne({ dna })
-
-	if (dnaFinded) {
-		throw new Error(`We already analize dna: ${dna}`)
+const validateUniqueDna = async (dna = ['']) => {
+	const filter = await Mutation.findOne({ dna })
+	console.log(filter)
+	if (filter !== null) {
+		throw new Error('We already analize this DNA')
 	}
 }
 

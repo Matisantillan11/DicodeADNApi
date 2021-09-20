@@ -67,9 +67,10 @@ const joinElementsOfArray = (array) => {
 }
 
 const validateHorizontal = (array) => {
+	let arrayTemp = [...array]
 	let mutations = 0
 	let nomutations = 0
-	array.map((el) => {
+	arrayTemp.map((el) => {
 		if (
 			el.match('CCCC') ||
 			el.match('AAAA') ||
@@ -77,7 +78,7 @@ const validateHorizontal = (array) => {
 			el.match('GGGG')
 		) {
 			mutations++
-			array.splice(array.indexOf(el), 1)
+			arrayTemp.splice(arrayTemp.indexOf(el), 1)
 		}
 
 		nomutations++

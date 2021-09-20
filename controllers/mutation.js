@@ -1,30 +1,42 @@
 const Mutation = require('../models/mutation')
 const { hasMutation } = require('../helpers/validateMutation')
-const postMutation = (req = request, res = response) => {
+
+const getMutation = async (req = request, res = response) => {
+	const mutations = await Mutation.find()
+	res.json({
+		mutations,
+	})
+}
+
+const postMutation = async (req = request, res = response) => {
 	const regex = new RegExp(/[^ACGT][^acgt]/)
 	const { dna } = req.body
 
+	console.log(dna)
 	dna.map((secuence) => {
 		if (regex.test(secuence)) {
-			res.status(400).send({
+			return res.status(400).json({
 				error: `Base on DNA can contain only "A", "C", "G" & "T" Letters. Error in secuence: ${secuence}`,
 			})
 		}
 	})
 
 	const { status, mutations, nomutations } = hasMutation(dna)
-
-	const mutation = new Mutation({ dna, hasMutation: status })
-	//mutation.save(mutation)
-
-	res.json({
-		mutation,
-		quantityMutations: mutations,
-		quantityNoMutations: nomutations,
+	const mutation = new Mutation({
+		dna,
+		countMutations: mutations,
+		countNoMutations: nomutations,
 		ratio: mutations / nomutations,
+		hasMutation: status,
+	})
+
+	await mutation.save()
+
+	return res.status(200).json({
+		mutation,
 	})
 }
-
 module.exports = {
 	postMutation,
+	getMutation,
 }
