@@ -1,4 +1,6 @@
 const Mutation = require('../models/mutation')
+const Stat = require('../models/stat')
+
 const { hasMutation } = require('../helpers/validateMutation')
 
 const getMutation = async (req = request, res = response) => {
@@ -22,7 +24,13 @@ const postMutation = async (req = request, res = response) => {
 	})
 
 	const { status, mutations, nomutations } = hasMutation(dna)
+
 	const mutation = new Mutation({
+		dna,
+		hasMutation: status,
+	})
+
+	const stat = new Stat({
 		dna,
 		countMutations: mutations,
 		countNoMutations: nomutations,
@@ -31,6 +39,7 @@ const postMutation = async (req = request, res = response) => {
 	})
 
 	await mutation.save()
+	await stat.save()
 
 	return res.status(201).json({
 		mutation,
