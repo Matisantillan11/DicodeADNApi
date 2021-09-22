@@ -10,9 +10,10 @@ const mutationSchema = Schema({
 		require: false,
 		default: false,
 	},
-	dateRegistMutation: {
+	analized_at: {
 		type: Date,
 		require: false,
+		default: new Date(),
 	},
 })
 

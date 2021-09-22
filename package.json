@@ -4,7 +4,7 @@
   "description": "final challenge from dicode solution",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test jest --verbose --silent ",
+    "test": "NODE_ENV=test jest --verbose --silent tests/stats.test.js ",
     "test:watch": "npm run test -- --watch",
     "start": "NODE_ENV=production node index.js",
     "dev": "NODE_ENV=development nodemon index.js"

@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
-const { server, listen } = require('../index')
 const Mutation = require('../models/mutation')
+
+const { server, listen } = require('../index')
 
 const api = supertest(server.app)
 
@@ -9,26 +10,20 @@ const InitialMutations = [
 	{
 		dna: ['ATGCGA', 'CAGTGC', 'TTATGT'],
 		hasMutation: true,
-		ratio: 0,
-		countMutation: 0,
-		countNoMutation: 0,
 	},
 	{
 		dna: ['ATGCGA', 'CAGTGC', 'TTATGT', 'AGAAGG', 'CCCCTA', 'TCACTG'],
 		hasMutation: true,
-		ratio: 0,
-		countMutation: 0,
-		countNoMutation: 0,
 	},
 ]
 
 beforeEach(async () => {
 	await Mutation.deleteMany({})
 
-	InitialMutations.map(async (sample) => {
-		const mutation = new Mutation(sample)
-		await mutation.save()
-	})
+	for (let mutation of initialStats) {
+		const mutationObject = new Stat(mutation)
+		await mutationObject.save()
+	}
 })
 
 test('database contain same quantity of Dna analized than mutations.length', async () => {
@@ -53,18 +48,6 @@ test('mutation is created correctly', async () => {
 	contents.map((el) => {
 		expect.arrayContaining(el)
 	})
-})
-
-test('first dna to analize has mutation', async () => {
-	const response = await api.get('/api/mutation/stats')
-	expect(response.body.mutations[0].hasMutation).toBe(true)
-})
-
-test('some dna is [ATGCGA, CAGTGC, TTATGT]', async () => {
-	const response = await api.get('/api/mutation/stats')
-	const contents = response.body.mutations.map((mutation) => mutation.dna)
-
-	expect(contents).toContain('ATGCGA', 'CAGTGC', 'TTATGT')
 })
 
 test('mutation returned as json', async () => {
