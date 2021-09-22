@@ -22,7 +22,9 @@ const hasMutation = (dna) => {
 		mutationsVerticals.nomutations +
 		mutationsDiagonals.nomutations
 
-	mutations === 0 && !status
+	if (mutations === 0) {
+		status = false
+	}
 
 	return {
 		status,

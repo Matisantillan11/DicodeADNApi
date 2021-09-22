@@ -5,7 +5,7 @@ const mutationSchema = Schema({
 		type: [String],
 		require: [true, 'DNA must be provided'],
 	},
-	hasMutation: {
+	has_mutation: {
 		type: Boolean,
 		require: false,
 		default: false,

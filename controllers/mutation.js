@@ -14,7 +14,6 @@ const postMutation = async (req = request, res = response) => {
 	const regex = new RegExp(/[^ACGT][^acgt]/)
 	const { dna } = req.body
 
-	console.log(dna)
 	dna.map((secuence) => {
 		if (regex.test(secuence)) {
 			return res.status(400).json({
@@ -25,23 +24,29 @@ const postMutation = async (req = request, res = response) => {
 
 	const { status, mutations, nomutations } = hasMutation(dna)
 
+	if (status === false || mutations === 0) {
+		return res.status(403).json({ msg: 'El ADN no contiene ninguna mutación' })
+	}
+
 	const mutation = new Mutation({
 		dna,
-		hasMutation: status,
+		has_mutation: status,
 	})
 
 	const stat = new Stat({
 		dna,
-		countMutations: mutations,
-		countNoMutations: nomutations,
+		count_mutations: mutations,
+		count_no_mutations: nomutations,
 		ratio: mutations / nomutations,
-		hasMutation: status,
+		has_mutation: status,
 	})
 
 	await mutation.save()
 	await stat.save()
 
-	return res.status(201).json({
+	return res.status(200).json({
+		'status-code': 200,
+		message: 'El ADN analizado contiene mutaciones',
 		mutation,
 	})
 }

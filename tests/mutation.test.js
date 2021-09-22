@@ -1,34 +1,26 @@
 const mongoose = require('mongoose')
-const supertest = require('supertest')
 const Mutation = require('../models/mutation')
 
-const { server, listen } = require('../index')
+const { listen } = require('../index')
 
-const api = supertest(server.app)
-
-const InitialMutations = [
-	{
-		dna: ['ATGCGA', 'CAGTGC', 'TTATGT'],
-		hasMutation: true,
-	},
-	{
-		dna: ['ATGCGA', 'CAGTGC', 'TTATGT', 'AGAAGG', 'CCCCTA', 'TCACTG'],
-		hasMutation: true,
-	},
-]
+const {
+	api,
+	InitialMutations,
+	getAllMutations,
+} = require('./helpers/mutation_helper')
 
 beforeEach(async () => {
 	await Mutation.deleteMany({})
 
-	for (let mutation of initialStats) {
-		const mutationObject = new Stat(mutation)
+	for (let mutation of InitialMutations) {
+		const mutationObject = new Mutation(mutation)
 		await mutationObject.save()
 	}
 })
 
-test('database contain same quantity of Dna analized than mutations.length', async () => {
-	const response = await api.get('/api/mutation/stats')
-	expect(response.body.mutations).toHaveLength(InitialMutations.length)
+test('stats contain same quantity of Dna analized', async () => {
+	const { response } = await getAllMutations()
+	expect(response.body.stats).toHaveLength(InitialMutations.length)
 })
 
 test('mutation is created correctly', async () => {
@@ -41,9 +33,7 @@ test('mutation is created correctly', async () => {
 		.send(newDNA)
 		.expect('Content-Type', /application\/json/)
 
-	const response = await api.get('/api/mutation/stats').expect(200)
-
-	const contents = response.body.mutations.map((el) => el.dna)
+	const { contents } = await getAllMutations()
 
 	contents.map((el) => {
 		expect.arrayContaining(el)
@@ -52,7 +42,7 @@ test('mutation is created correctly', async () => {
 
 test('mutation returned as json', async () => {
 	await api
-		.get('/api/mutation/stats')
+		.get('/api/stats')
 		.expect(200)
 		.expect('Content-Type', /application\/json/)
 })
