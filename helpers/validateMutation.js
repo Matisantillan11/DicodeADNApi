@@ -9,18 +9,21 @@ const hasMutation = (dna) => {
 	const mutationsHorizontals = validateHorizontal(dna)
 	const mutationsVerticals = validateVertical(arrayJoined)
 	const mutationsDiagonals = validateDiagonal(arrayJoined)
+	const mutationsInvertDiagonals = validateInvertDiagonal(arrayJoined)
 
 	mutations =
 		mutations +
 		mutationsHorizontals.mutations +
 		mutationsVerticals.mutations +
-		mutationsDiagonals.mutations
+		mutationsDiagonals.mutations +
+		mutationsInvertDiagonals.mutations
 
 	nomutations =
 		nomutations +
 		mutationsHorizontals.nomutations +
 		mutationsVerticals.nomutations +
-		mutationsDiagonals.nomutations
+		mutationsDiagonals.nomutations +
+		mutationsInvertDiagonals.nomutations
 
 	if (mutations === 0) {
 		status = false
@@ -130,6 +133,48 @@ const validateDiagonal = (array) => {
 	})
 
 	return { mutations, nomutations }
+}
+
+const validateInvertDiagonal = (array) => {
+	let mutations = 0
+	let nomutations = 0
+
+	const invertDiagonal = invertDiagonalTravel(array)
+
+	invertDiagonal.map((el) => {
+		if (
+			el.match('CCCC') ||
+			el.match('AAAA') ||
+			el.match('TTTT') ||
+			el.match('GGGG')
+		) {
+			mutations++
+			invertDiagonal.splice(invertDiagonal.indexOf(el), 1)
+		}
+
+		nomutations++
+	})
+
+	return { mutations, nomutations }
+}
+
+const invertDiagonalTravel = (array) => {
+	let tempArray = [...array]
+	let arrayDiagonal = []
+
+	let index = tempArray.length - 1
+	while (arrayDiagonal.length < tempArray.length) {
+		let cadena = ''
+
+		for (index; index >= 0; index--) {
+			cadena = cadena + tempArray[index].charAt(cadena.length)
+		}
+
+		arrayDiagonal.push(cadena)
+		index = tempArray.length - arrayDiagonal.length - 1
+	}
+
+	return arrayDiagonal
 }
 
 const LowerDiagonalTravel = (array) => {

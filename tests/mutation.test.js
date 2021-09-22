@@ -1,13 +1,16 @@
 const mongoose = require('mongoose')
+const { server, listen } = require('../index')
 const Mutation = require('../models/mutation')
-
-const { listen } = require('../index')
 
 const {
 	api,
 	InitialMutations,
 	getAllMutations,
 } = require('./helpers/mutation_helper')
+
+beforeAll(() => {
+	listen.close()
+})
 
 beforeEach(async () => {
 	await Mutation.deleteMany({})

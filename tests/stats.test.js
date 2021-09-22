@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
+const { server, listen } = require('../index')
 const Stat = require('../models/stat')
 
-const { listen } = require('../index')
 const { api } = require('./helpers/mutation_helper')
 
 const initialStats = [
@@ -20,6 +20,10 @@ const initialStats = [
 		countNoMutation: 0,
 	},
 ]
+
+beforeAll(() => {
+	listen.close()
+})
 
 beforeEach(async () => {
 	await Stat.deleteMany({})
