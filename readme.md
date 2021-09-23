@@ -71,7 +71,7 @@ To introduce a DNA and have it analyzed, the `POST` method must be used in the `
 }
 ```
 
-2.  If the DNA provided is incorrect, you must receive the **status code 400** and this information
+2.  If the DNA provided doesn't have mutations, you must receive the **status code 403** and this information
 
 ```json
 {
