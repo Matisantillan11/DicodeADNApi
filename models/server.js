@@ -29,6 +29,21 @@ class Server {
 	routes() {
 		this.app.use(this.mutationRoute, mutation)
 		this.app.use(this.statRoute, stat)
+
+		this.app.use('*', (req, res) => {
+			res.status(204).json({
+				status_code: 204,
+				message: 'No content founded in this endpoint',
+				endopoint_with_response: [
+					{
+						endpoint: this.mutationRoute,
+					},
+					{
+						endpoint: this.statRoute,
+					},
+				],
+			})
+		})
 	}
 
 	async ConnectToDb() {

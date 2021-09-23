@@ -1,12 +1,10 @@
-const { Router, response, request } = require('express')
+const { Router } = require('express')
 const { check } = require('express-validator')
 const { postMutation, getMutation } = require('../controllers/mutation')
-const { validateUniqueDna, validateBase } = require('../helpers/validDna')
+const { validateUniqueDna } = require('../helpers/validDna')
 const validateEntries = require('../middlewares/validateEntries')
 
 const router = Router()
-
-router.get('/stats', getMutation)
 
 router.post(
 	'/',
