@@ -1,0 +1,27 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body div {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	background-color: #ededed;
+	position: relative;
+}
+
+div .text-container {
+	width: 40%;
+	height: 20%;
+	position: absolute;
+	top: 65%;
+	left: 50%;
+	background-color: transparent;
+	transform: translate(-50%, -15%);
+}
