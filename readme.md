@@ -121,7 +121,7 @@ Using the `GET` method in the `/api/stats` endpoint you will be able to see the 
 
 <div style="margin-bottom: 50px" >
 <table>
-<tr><th>Response Body</th> <th>   Type</th> <th> Description</th><th>   Example </th></tr>
+<tr><th>Request Body</th> <th>   Type</th> <th> Description</th><th>   Example </th></tr>
 <tr><td>DNA </td><td> Array of strings </td> <td>Each String of the array represents a nitrogenous base of DNA. Each base can only contain the letters A, C, G, T.</td><td>  [
                 "ATGCGA",
                 "CAGTGC",
