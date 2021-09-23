@@ -1,20 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./styles/styles.css">
-</head>
-<body>
-    <div>
-        <img src="./img/404.png" alt="">
-        <div class="text-container">
-            <p>Para obtener contenido dirigite a 
-                </br><a href=" https://dicode-adn-api.herokuapp.com/api/stats">/api/stats</a>
-            </p>
-        </div>
-    </div>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>DNA API - Dicode Group Challenge</title>
+		<link rel="stylesheet" href="./styles/styles.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body>
+		<header>
+			<h1>
+				DICODE DNA API
+				<p>by Matias Santillan</p>
+			</h1>
+
+			<nav>
+				<ul>
+					<li><a href="#endpoints">Endpoints</a></li>
+					<li><a href="#description">Description</a></li>
+					<li>
+						<a
+							href="https://www.linkedin.com/in/matisantillan11/"
+							target="_blank"
+							>Contacto</a
+						>
+					</li>
+				</ul>
+			</nav>
+		</header>
+
+		<main>
+			<section id="description">
+				<h2>Description of the proyect</h2>
+				<p>
+					In this project, you will be able to detect if a person has genetic
+					differences based on their DNA sequence. To achieve this, each
+					nitrogenous base provided in the DNA is analyzed in order to detect if
+					there is more than one sequence of 4 identical letters (which can only
+					be A, C, G, T). Each array of nitrogenated bases represents each row
+					from a table of NxN, so the DNA must be analyzed horizontally,
+					vertically and diagonally
+				</p>
+			</section>
+
+			<section id="endpoints">
+				<h2>Methods and endpoints</h2>
+				<div>
+					<div class="method">
+						<h4>POST DNA</h4>
+						<p>
+							To introduce a DNA and have it analyzed, the <b>POST</b> method
+							must be used in the <code>/api/mutation</code> endpoint, which
+							will take care of analyzing the sample and registering its
+							anomalies.
+						</p>
+
+						<div>
+							<h3>Responses</h3>
+							<article>
+								<p class="article-list">
+									1. If the DNA provided is correct, you must receive the
+									<b>status code 200</b> and this information:
+								</p>
+
+								<img src="img/dna-analized.png" />
+							</article>
+
+							<article>
+								<p class="article-list">
+									2.f the DNA provided is incorrect, you must receive the
+									<b>status code 403</b> and this information
+								</p>
+
+								<img src="img/dna-no-mutations.png" />
+							</article>
+						</div>
+
+						<div>
+							<table>
+								<tr>
+									<th>Request Body</th>
+									<th>Type</th>
+									<th>Description</th>
+									<th>Example</th>
+								</tr>
+								<tr>
+									<td>DNA</td>
+									<td>Array of strings</td>
+									<td>
+										Each String of the array represents a nitrogenous base of
+										DNA. Each base can only contain the letters A, C, G, T.
+									</td>
+									<td>["ATGCGA","CAGTGC","TTATGT"]</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+
+					<div class="method">
+						<h4>GET STATS</h4>
+						<p>
+							Using the <b>GET</b> method in the
+							<code>/api/stats</code> endpoint you will be able to see the
+							statistics of all the analyzed DNAs that contain mutations.
+						</p>
+
+						<div>
+							<h3>Responses</h3>
+
+							<article>
+								<p class="article-list">
+									1. If the database contains analized DNAs, you must receive
+									<b>status code 200</b> and the according information
+								</p>
+								<img src="img/stats.png" />
+							</article>
+						</div>
+
+						<div>
+							<table>
+								<tr>
+									<th>Response Body</th>
+									<th>Type</th>
+									<th>Description</th>
+									<th>Example</th>
+								</tr>
+								<tr>
+									<td>DNA</td>
+									<td>Array of strings</td>
+									<td>
+										Each String of the array represents a nitrogenous base of
+										DNA. Each base can only contain the letters A, C, G, T.
+									</td>
+									<td>
+										[ "ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG"
+										],
+									</td>
+								</tr>
+
+								<tr>
+									<td>has_mutation</td>
+									<td>Boolean</td>
+									<td>
+										It represents the status of the DNA. If has mutation is
+										"true", else is "false".
+									</td>
+									<td>true</td>
+								</tr>
+
+								<tr>
+									<td>count_mutation</td>
+									<td>Integer</td>
+									<td>
+										It represents the quantity of bases with no mutation found.
+									</td>
+									<td>3</td>
+								</tr>
+
+								<tr>
+									<td>count_no_mutation</td>
+									<td>Integer</td>
+									<td>
+										It represents quantity of bases with no mutation finded
+									</td>
+									<td>14</td>
+								</tr>
+
+								<tr>
+									<td>ratio</td>
+									<td>Integer</td>
+									<td>
+										It's the difference between count_mutation and
+										count_no_utation
+									</td>
+									<td>0.21428571428571427</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+	</body>
 </html>
