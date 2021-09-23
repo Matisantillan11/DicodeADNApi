@@ -21,10 +21,6 @@ const initialStats = [
 	},
 ]
 
-beforeAll(() => {
-	listen.close()
-})
-
 beforeEach(async () => {
 	await Stat.deleteMany({})
 
@@ -53,7 +49,7 @@ test('stats returned as json and status 200', async () => {
 		.expect('Content-Type', /application\/json/)
 })
 
-afterAll(() => {
-	mongoose.connection.close()
-	listen.close()
+afterAll(async () => {
+	await mongoose.connection.close()
+	await listen.close()
 })

@@ -8,8 +8,8 @@ const {
 	getAllMutations,
 } = require('./helpers/mutation_helper')
 
-beforeAll(() => {
-	listen.close()
+beforeAll(async () => {
+	await listen.close()
 })
 
 beforeEach(async () => {
@@ -50,7 +50,7 @@ test('mutation returned as json', async () => {
 		.expect('Content-Type', /application\/json/)
 })
 
-afterAll(() => {
-	mongoose.connection.close()
-	listen.close()
+afterAll(async () => {
+	await mongoose.connection.close()
+	await listen.close()
 })

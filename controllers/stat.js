@@ -8,11 +8,6 @@ const getStats = async (req = request, res = response) => {
 			'status-code': 200,
 			stats,
 		})
-	} else {
-		return res.status(204).json({
-			'status-code': 204,
-			message: 'No se encontraron estados de ADNs actualizados',
-		})
 	}
 }
 

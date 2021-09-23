@@ -1,4 +1,4 @@
-const { hasMutation } = require('../helpers/validateMutation')
+const { hasMutation } = require('../helpers/mutation/validateMutation')
 
 test('check if specific DNA has mutation', () => {
 	const mutation = hasMutation([
